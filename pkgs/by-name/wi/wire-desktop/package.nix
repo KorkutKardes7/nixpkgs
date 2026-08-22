@@ -28,12 +28,12 @@ let
       };
     };
     x86_64-darwin = rec {
-      version = "3.42.5489";
+      version = "3.43.5493";
       src = fetchFromGitHub {
         owner = "wireapp";
         repo = "wire-desktop";
         tag = "macos/${version}";
-        hash = "sha256-v80sdksor6V0OVXlBTeMf9Jz8lhQy+UdyTxxupuafeo=";
+        hash = "sha256-up5DbPURjLXSWOAFVlii4GUolU8n1Lex562M5jkJtzs=";
       };
     };
     aarch64-linux = x86_64-linux;
@@ -63,7 +63,11 @@ stdenv.mkDerivation (finalAttrs: {
   missingHashes = ./missing-hashes.json;
   offlineCache = yarn-berry.fetchYarnBerryDeps {
     inherit (finalAttrs) src missingHashes;
-    hash = "sha256-md7B8NSqT9dmPxrp9zbWifNow+1j2tuTRMOljG1V8WE=";
+    hash =
+      if stdenv.isDarwin then
+        "sha256-dgmmVuKWDvMqCmAhelph0LGhI87Ox8ziTTIrnHTaD7Y="
+      else
+        "sha256-md7B8NSqT9dmPxrp9zbWifNow+1j2tuTRMOljG1V8WE=";
   };
 
   nativeBuildInputs = [
